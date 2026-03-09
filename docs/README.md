@@ -5,7 +5,7 @@ SPDX-License-Identifier: BSD-3-Clause-Open-MPI
 
 # OCUDU Documentation
 
-This directory contains the automated API documentation generation (Doxygen) for OCUDU code.
+This directory contains the automated API documentation generation (Doxygen) for OCUDU code, as well as repository-local wiki-style documentation pages.
 
 ## Structure
 
@@ -14,8 +14,15 @@ docs/
 ├── .env                     # env file for docker-compose
 ├── docker-compose.yml       # Docker services for documentation
 ├── doxygen/                 # Doxygen project
+├── repository-analysis.md   # Wiki-style repository overview (this repo)
 └── README.md                # This file
 ```
+
+## Wiki pages
+
+The following pages are maintained in this repository:
+
+- [Repository Analysis](repository-analysis.md)
 
 ## Docker Services
 
