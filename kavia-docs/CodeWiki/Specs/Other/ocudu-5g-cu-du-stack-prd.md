@@ -54,6 +54,26 @@ Automated API documentation tooling under `docs/**` (Doxygen-based), including m
 A general-purpose web control plane (HTTP API) is not part of the product surface in this repository.
 A GUI for configuration and control is not part of the repository; the provided UI components focus on metrics visualization (Grafana stack) rather than node configuration management.
 
+## PRD diagram
+
+The following diagram summarizes the primary system context and the most common operational flow evidenced by the repository: an operator running an OCUDU node (gNB or split CU/DU binaries), connecting to a 5G core for N2/N3, and optionally exporting metrics to the monitoring stack via a WebSocket endpoint (configured via `WS_URL` in the docker-based monitoring setup).
+
+```mermaid
+flowchart LR
+  Op["Operator / lab engineer"] -->|"Build and run (CMake + CLI) or docker compose"| Host["Execution environment (host or Docker)"]
+
+  Host -->|"runs"| GNB["OCUDU gNB (CLI app)"]
+  Host -->|"runs"| CU["OCUDU CU (CLI app)"]
+  Host -->|"runs"| DU["OCUDU DU (CLI app)"]
+
+  Core["Open5GS 5G Core"] <-->|"N2 (SCTP) and N3 (GTP-U/UDP)"| GNB
+  Core <-->|"N2 (SCTP) and N3 (GTP-U/UDP)"| CU
+
+  Mon["Monitoring stack (Telegraf + InfluxDB + Grafana)"] -->|"WebSocket metrics (WS_URL)"| GNB
+  Mon -->|"WebSocket metrics (WS_URL)"| CU
+  Mon -->|"WebSocket metrics (WS_URL)"| DU
+```
+
 ## Supported deployment modes
 
 The repository indicates the product supports multiple primary runtime topologies via separate binaries and container stacks:
